@@ -1,0 +1,5 @@
+{
+    "css_styles": "<style>body { font-family: Arial, sans-serif; margin: 20px; } h1, h2, h3 { color: #333; }</style>",
+    "elements_to_remove": ["nav", "footer", "aside", "script", "style"],
+    "pagination_selector": "a.next"
+}

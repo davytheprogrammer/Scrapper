@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Scraper UI</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Web Scraper UI</h1>
+        <form id="scrape-form">
+            <input type="url" id="url-input" placeholder="Enter website URL" required>
+            <div class="checkbox-container">
+                <input type="checkbox" id="scrape-images" name="scrape-images">
+                <label for="scrape-images">Scrape images</label>
+            </div>
+            <button type="submit">Scrape Website</button>
+        </form>
+        <div id="progress-container" class="hidden">
+            <div id="progress-bar">
+                <div id="progress"></div>
+            </div>
+            <p id="progress-text"></p>
+        </div>
+        <div id="result" class="hidden">
+            <h2>Result</h2>
+            <p id="result-message"></p>
+            <a id="download-link" class="hidden" download>Download Merged PDF</a>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
