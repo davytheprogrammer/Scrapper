@@ -1,6 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
-import pdfkit
+from weasyprint import HTML
 import os
 import logging
 import validators
@@ -12,17 +12,11 @@ import json
 from urllib.parse import urljoin
 
 # Configure logging
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(message)s')
 
 # Load configuration settings
 with open('config/config.json') as config_file:
     config = json.load(config_file)
-
-# Path to wkhtmltopdf executable
-path_to_wkhtmltopdf = r'C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe'
-
-# Configure pdfkit
-pdfkit_config = pdfkit.configuration(wkhtmltopdf=path_to_wkhtmltopdf)
 
 def clean_html(html_content, scrape_images=False, base_url=''):
     try:
@@ -64,7 +58,9 @@ def fetch_and_convert_to_pdf(url, output_dir, scrape_images):
         if response.status_code == 200:
             cleaned_html = clean_html(response.content, scrape_images, url)
             pdf_path = os.path.join(output_dir, f"{url.split('//')[1].replace('/', '_')}.pdf")
-            pdfkit.from_string(cleaned_html, pdf_path, configuration=pdfkit_config)
+            
+            # Use WeasyPrint instead of pdfkit
+            HTML(string=cleaned_html).write_pdf(pdf_path)
             logging.info(f"Successfully converted {url} to PDF")
 
             if os.path.getsize(pdf_path) <= 2150:
